@@ -61,7 +61,7 @@ def main():
         webpage_cookies_popup.click()
     except Exception as e:
         print(f'Error occurred: {e}')
-        quit
+        quit()
 
     is_playing_game = True
     clicked_product = False

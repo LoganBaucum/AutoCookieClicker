@@ -88,12 +88,21 @@ def main():
             big_cookie_element = WebDriverWait(DRIVER, 5).until(
                 EC.presence_of_element_located((By.ID, "bigCookie"))
             )
+            big_cookie_element.click()
         except Exception as exc:
             print(f'ERROR: {exc}')
             is_playing_game = False
 
-        big_cookie_element.click()
-    
+        # Golden Cookie
+        try:
+            golden_cookie_element = WebDriverWait(DRIVER, 5).until(
+                EC.presence_of_element_located((By.ID, "goldenCookie"))
+            )
+            golden_cookie_element.click()
+        except Exception as exc:
+            print(f'ERROR: {exc}')
+
+
         close_notification_popups()
         
         # Products

@@ -3,6 +3,10 @@
 # Download "ChromeDriver win64" from https://googlechromelabs.github.io/chrome-for-testing/#stable.
 # Extract the file and place the chromedriver.exe to the same folder as this file.
 
+# TODO: Add save/load game functionality.
+# TODO: Add NewGame+ functionality, to enable ascending to the next level.
+
+
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -22,10 +26,21 @@ if ( os.path.isfile(WEBDRIVER_PATH) ) == False:
 
 # Set up the webdriver service.
 SERVICE = Service(executable_path=WEBDRIVER_PATH)
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--window-size=800,600")
-chrome_options.add_argument("--mute-audio")
-DRIVER = webdriver.Chrome(service=SERVICE, options=chrome_options)
+CHROME_OPTIONS = webdriver.ChromeOptions()
+CHROME_OPTIONS.add_argument("--window-size=800,600")
+CHROME_OPTIONS.add_argument("--mute-audio")
+DRIVER = webdriver.Chrome(service=SERVICE, options=CHROME_OPTIONS)
+
+def close_notification_popups():
+    popup_class = "notes"
+    try:
+        notifications = DRIVER.find_elements(By.ID, popup_class)
+        for note in notifications:
+            note_title = note.find_element(By.TAG_NAME, 'h3').text
+            note.find_element(By.CLASS_NAME, 'close').click()
+            print(f'Closed {note_title} notification.')
+    except:
+        return
 
 def main(): 
     DRIVER.get(GAME_URL)
@@ -46,13 +61,6 @@ def main():
     # Wait for page reload.
     time.sleep(5)
 
-    
-    # Options
-    # ID = PerfsButton, CLASS = panelButton
-    # TODO: Setup options to increase performance
-
-    # TODO: Add save/load game functionality.
-
     # Close webpage cookies popup notification
     try:
         webpage_cookies_popup = WebDriverWait(DRIVER, 5).until(
@@ -62,6 +70,8 @@ def main():
     except Exception as e:
         print(f'Error occurred: {e}')
         quit()
+
+    close_notification_popups()
 
     is_playing_game = True
     clicked_product = False
@@ -78,6 +88,8 @@ def main():
 
         big_cookie_element.click()
     
+        close_notification_popups()
+        
         # Products
         # Buys a product, the cheapest product will be bought.
         # ID = Product#, for each product.

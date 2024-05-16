@@ -61,6 +61,10 @@ def main():
     # Wait for page reload.
     time.sleep(5)
 
+    # Hide ads
+    DRIVER.execute_script("document.getElementById('support').style.display = 'none';")
+    DRIVER.execute_script("document.getElementById('smallSupport').style.display = 'none';") 
+
     # Close webpage cookies popup notification
     try:
         webpage_cookies_popup = WebDriverWait(DRIVER, 5).until(

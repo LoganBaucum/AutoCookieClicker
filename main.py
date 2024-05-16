@@ -5,6 +5,9 @@
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 import time
 import sys
@@ -28,6 +31,14 @@ def main():
     DRIVER.get(GAME_URL)
     DRIVER.set_window_size(1200,1000)
     DRIVER.set_window_position(0,0)
+
+    try:
+        WebDriverWait(DRIVER, 5).until(
+            EC.presence_of_element_located((By.ID, "langSelect-EN"))
+        ).click()
+    except Exception as exc:
+        print(f'ERROR: {exc}')
+        quit()
     
     time.sleep(5)
 

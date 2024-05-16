@@ -100,14 +100,16 @@ def main():
         # CLASS = Product.Unlocked.Enabled, for purchasable products
         try:
             product = DRIVER.find_element(By.CLASS_NAME, "product.unlocked.enabled")
-            product_name = product.text.split("\n")[0]
-            product_id = product.get_attribute("ID")
-            product_owned_id = "productOwned" + product_id.split("product")[1]
+            product_name = product.find_element(By.CLASS_NAME, 'title.productName').text
+            product_amount_owned = product.find_element(By.CLASS_NAME, 'title.owned').text
+            # product_name = product.text.split("\n")[0]
+            # product_id = product.get_attribute("ID")
+            # product_owned_id = "productOwned" + product_id.split("product")[1]
+            # product_amount_owned = DRIVER.find_element(By.ID, product_owned_id).text
 
             if not clicked_product:
                 product.click()
                 clicked_product = True
-                product_amount_owned = DRIVER.find_element(By.ID, product_owned_id).text
                 print(f'Bought product: {product_name}, Owned: {product_amount_owned}')
         except:
             clicked_product = False

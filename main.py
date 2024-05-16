@@ -51,7 +51,7 @@ def main():
 
     try:
         WebDriverWait(DRIVER, 5).until(
-            EC.presence_of_element_located((By.ID, "langSelect-EN"))
+            EC.element_to_be_clickable((By.ID, "langSelect-EN"))
         ).click()
     except Exception as exc:
         print(f'ERROR: {exc}')
@@ -73,8 +73,8 @@ def main():
             EC.element_to_be_clickable((By.CLASS_NAME, "cc_btn.cc_btn_accept_all"))
         )
         webpage_cookies_popup.click()
-    except Exception as e:
-        print(f'Error occurred: {e}')
+    except Exception as exc:
+        print(f'Error occurred: {exc}')
         quit()
 
     close_notification_popups()
@@ -86,7 +86,7 @@ def main():
     while is_playing_game:
         try:
             big_cookie_element = WebDriverWait(DRIVER, 5).until(
-                EC.presence_of_element_located((By.ID, "bigCookie"))
+                EC.element_to_be_clickable((By.ID, "bigCookie"))
             )
             big_cookie_element.click()
         except Exception as exc:
@@ -95,13 +95,10 @@ def main():
 
         # Golden Cookie
         try:
-            golden_cookie_element = WebDriverWait(DRIVER, 5).until(
-                EC.presence_of_element_located((By.ID, "goldenCookie"))
-            )
+            golden_cookie_element = DRIVER.find_element(By.CLASS_NAME, "goldenCookie")
             golden_cookie_element.click()
-        except Exception as exc:
-            print(f'ERROR: {exc}')
-
+        except:
+            pass
 
         close_notification_popups()
         

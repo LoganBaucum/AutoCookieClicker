@@ -9,6 +9,7 @@
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -30,6 +31,7 @@ CHROME_OPTIONS = webdriver.ChromeOptions()
 CHROME_OPTIONS.add_argument("--window-size=800,600")
 CHROME_OPTIONS.add_argument("--mute-audio")
 DRIVER = webdriver.Chrome(service=SERVICE, options=CHROME_OPTIONS)
+actions = ActionChains(DRIVER)
 
 def close_notification_popups():
     popup_class = "notes"
@@ -102,10 +104,6 @@ def main():
             product = DRIVER.find_element(By.CLASS_NAME, "product.unlocked.enabled")
             product_name = product.find_element(By.CLASS_NAME, 'title.productName').text
             product_amount_owned = product.find_element(By.CLASS_NAME, 'title.owned').text
-            # product_name = product.text.split("\n")[0]
-            # product_id = product.get_attribute("ID")
-            # product_owned_id = "productOwned" + product_id.split("product")[1]
-            # product_amount_owned = DRIVER.find_element(By.ID, product_owned_id).text
 
             if not clicked_product:
                 product.click()
@@ -120,10 +118,18 @@ def main():
         # CLASS = Crate.Upgrade.Enabled, for purchasable upgrades.
         try:
             upgrade_button = DRIVER.find_element(By.CLASS_NAME, "crate.upgrade.enabled")
+            actions.reset_actions()
+            actions.move_to_element(upgrade_button).perform()
+            try: 
+                tooltip = DRIVER.find_element(By.ID, "tooltip")
+                upgrade_name = tooltip.find_element(By.CLASS_NAME, 'name').text
+            except:
+                pass
+
             if not clicked_upgrade:
                 upgrade_button.click()
                 clicked_upgrade = True
-                print(f"Bought upgrade: ")
+                print(f"Bought upgrade: {upgrade_name}")
         except:
             clicked_upgrade = False
 

@@ -157,6 +157,13 @@ def main():
 
     while is_playing_game:
         try:
+            # Golden Cookie appears on top of big cookie and needs to be checked first.
+            golden_cookie_element = DRIVER.find_element(By.CLASS_NAME, "goldenCookie")
+            golden_cookie_element.click()
+        except:
+            pass
+
+        try:
             big_cookie_element = WebDriverWait(DRIVER, 5).until(
                 EC.element_to_be_clickable((By.ID, "bigCookie"))
             )
@@ -164,13 +171,6 @@ def main():
         except Exception as exc:
             print(f'ERROR: {exc}')
             is_playing_game = False
-
-        # Golden Cookie
-        try:
-            golden_cookie_element = DRIVER.find_element(By.CLASS_NAME, "goldenCookie")
-            golden_cookie_element.click()
-        except:
-            pass
 
         close_notification_popups()
         

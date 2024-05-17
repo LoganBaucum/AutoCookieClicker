@@ -83,7 +83,7 @@ def export_save_game():
 def import_save_game():
     try:
         ACTIONS.reset_actions()
-        ACTIONS.key_down(Keys.CONTROL).send_keys('O').key_down(Keys.CONTROL)
+        ACTIONS.key_down(Keys.CONTROL).send_keys('O').key_up(Keys.CONTROL)
         ACTIONS.perform()
 
         try:
@@ -181,6 +181,10 @@ def main():
             product_name = product.find_element(By.CLASS_NAME, 'title.productName').text
             product_amount_owned = product.find_element(By.CLASS_NAME, 'title.owned').text
 
+            if not product.is_displayed:
+                ACTIONS.reset_actions()
+                ACTIONS.scroll_to_element(product).perform
+
             if not clicked_product:
                 product.click()
                 clicked_product = True
@@ -199,6 +203,10 @@ def main():
                 upgrade_name = tooltip.find_element(By.CLASS_NAME, 'name').text
             except:
                 pass
+
+            if not upgrade_button.is_displayed:
+                ACTIONS.reset_actions()
+                ACTIONS.scroll_to_element(upgrade_button).perform
 
             if not clicked_upgrade:
                 upgrade_button.click()

@@ -63,6 +63,7 @@ def export_save_game():
                 save_file = open(SAVE_FILE_PATH, "w")
                 save_file.write(save_game_text)
                 save_file.close()
+                # print("Exported save.")
 
             except Exception as exc:
                 print(f'ERROR Opening savefile: {exc}')
@@ -96,8 +97,8 @@ def import_save_game():
 
             script = f"document.getElementById('textareaPrompt').value = `{save_file_contents}`;"
             DRIVER.execute_script(script)
-
             save_file.close()
+            # print("Imported save.")
 
         except Exception as exc:
             print(f'ERROR opening savefile: {exc}')
@@ -183,7 +184,7 @@ def main():
 
             if not product.is_displayed:
                 ACTIONS.reset_actions()
-                ACTIONS.scroll_to_element(product).perform
+                ACTIONS.scroll_to_element(product).perform()
 
             if not clicked_product:
                 product.click()
@@ -206,7 +207,7 @@ def main():
 
             if not upgrade_button.is_displayed:
                 ACTIONS.reset_actions()
-                ACTIONS.scroll_to_element(upgrade_button).perform
+                ACTIONS.scroll_to_element(upgrade_button).perform()
 
             if not clicked_upgrade:
                 upgrade_button.click()
@@ -220,7 +221,6 @@ def main():
         current_time = time.strftime("%S", t)
         if int(current_time) == 00:
             if not has_saved_game:
-                print('SAVING THE GAME')
                 export_save_game()
                 has_saved_game = True
         else:

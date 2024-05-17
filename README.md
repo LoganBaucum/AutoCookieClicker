@@ -1,5 +1,5 @@
 # AutoCookieClicker
-A Python project that utilizes Selenium Webdriver to automate the web-based game Cookie Clicker.
+A Python project that utilizes Selenium Webdriver to automate the web-based game [Cookie Clicker](https://orteil.dashnet.org/cookieclicker/).
 
 How to use:
 1. Download/Extract this repo onto your local machine.

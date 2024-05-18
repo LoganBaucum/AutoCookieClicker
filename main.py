@@ -17,6 +17,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import os
 
+print("Auto Cookie Clicker running...\n")
+
 GAME_URL = "https://orteil.dashnet.org/cookieclicker/"
 WEBDRIVER_PATH = "chromedriver.exe"
 SAVE_FILE_PATH = "savefile.txt"
@@ -170,7 +172,7 @@ def main():
             )
             big_cookie_element.click()
         except Exception as exc:
-            print(f'ERROR: {exc}')
+            print(f'ERROR with BigCookie: {exc}')
             is_playing_game = False
 
         close_notification_popups()

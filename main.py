@@ -218,6 +218,14 @@ def main():
         except:
             clicked_upgrade = False
 
+        # TODO: Sugar lumps, check if ripe then do something.
+
+
+
+        # TODO Prestige / Ascension / Heavenly Chip upgrades
+
+
+
         # Auto save the game every minute.
         t = time.localtime()
         current_time = time.strftime("%S", t)
